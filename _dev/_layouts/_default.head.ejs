@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html class="no-js" lang="<%- pageData.lang %>">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title><%- pageData.head.title %></title>
+    <link rel="alternate" hreflang="en" href="<%- domainProdEn %><%- pageData.head.urlEn %>">
+    <link rel="canonical" href="<%- domainProdEn %><%- pageData.head.urlCanonical %>">
+    <meta name="keywords" content="<%- pageData.head.metaPageKeywords %>">
+    <meta name="description" content="<%- pageData.head.metaPageDescription %>">
+<%if (pageData.stylesheets){
+    let pageStylesheets = pageData.stylesheets;
+    if(!(Array.isArray(pageData.stylesheets))){
+      pageStylesheets = [pageData.stylesheets];
+    }         
+    pageStylesheets.forEach((stylesheet,index)=>{ %>
+    <link href="<%-stylesheet%>" rel="stylesheet" type="text/css" />
+<%  });
+  } %>
+  </head>
+  <body>
