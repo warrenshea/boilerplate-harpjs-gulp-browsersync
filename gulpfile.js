@@ -61,7 +61,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./_dev/resources/stylesheets/*.scss', ['css']);
+  gulp.watch(['./_dev/resources/stylesheets/*.scss', './_dev/resources/stylesheets/**/*.scss'], ['css']);
   gulp.watch('./_dev/resources/scripts/*.js', ['js']);
   gulp.watch('./_dev/**/*.ejs', ['html']);
 });
