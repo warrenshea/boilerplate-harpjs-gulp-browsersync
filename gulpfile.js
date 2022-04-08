@@ -3,7 +3,8 @@
 const gulp = require('gulp'),
 
       //CSS
-      sass = require('gulp-sass'),
+      sass = require('gulp-sass')(require('sass')),
+      postcss = require('gulp-postcss'),
       cleanCSS = require('gulp-clean-css'),
 
       //JavaScript
@@ -13,7 +14,7 @@ const gulp = require('gulp'),
       //Helpers
       harp = require('harp'),
       exec = require('child_process').exec,
-      autoprefixer = require('gulp-autoprefixer'),
+      autoprefixer = require('autoprefixer'),
       browserSync = require('browser-sync'),
       reload = browserSync.reload,
       argv = require('yargs').argv,
@@ -35,10 +36,13 @@ const clean = (done) => {
 }
 
 const css = (done) => {
+  let plugins = [
+      autoprefixer({browserlist: ['last 2 version','ie 11']})
+  ];
   if (process.env.NODE_ENV === 'development') {
     return gulp.src(['./_dev/resources/stylesheets/**/*.scss'])
       .pipe(sass().on('error', sass.logError))
-      .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+      //.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
       /*.pipe(cleanCSS({
         //Remove comments and minify
         level: {
@@ -49,12 +53,13 @@ const css = (done) => {
   } else {
     return gulp.src(['./_dev/resources/stylesheets/**/*.scss'])
       .pipe(sass().on('error', sass.logError))
-      .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
-      .pipe(cleanCSS({
-        //Remove comments and minify
-        level: {
-          1: {specialComments: 0}
-        }}))
+      //.pipe(postcss(plugins))
+      // .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+      // .pipe(cleanCSS({
+      //   //Remove comments and minify
+      //   level: {
+      //     1: {specialComments: 0}
+      //   }}))
       .pipe(gulp.dest('./_dist/resources/stylesheets'));
   }
 }
@@ -85,10 +90,11 @@ const html = (done) => {
   done();
 }
 
-const watchFiles = () => {
+const watchFiles = (done) => {
   gulp.watch(['./_dev/resources/stylesheets/*.scss', './_dev/resources/stylesheets/**/*.scss','./_dev/style-guide/**/*.css'], css);
   gulp.watch(['./_dev/resources/scripts/*.js', './_dev/resources/scripts/**/*.js',,'./_dev/style-guide/**/*.js'], js);
   gulp.watch('./_dev/**/*.ejs', html);
+  done();
 }
 
 const devSetEnv = (done) => {

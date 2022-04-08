@@ -1,7 +1,8 @@
-# Boilerplate for HarpJS, Gulp 4, node 10, BrowserSync
+# Boilerplate for HarpJS 0.34.0, Gulp 4, node 12, BrowserSync
 
 ## Prerequisites
 
+HarpJS 0.34.0
 Gulp 4
 NodeJS 12
 
